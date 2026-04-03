@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<title>科技新闻日报 · 2026.03.31</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0d16;
+  --surface: #0f1220;
+  --surface2: #131828;
+  --border: rgba(255,255,255,0.07);
+  --text: #e2e6f0;
+  --text-muted: #8892a4;
+  --purple: #a78bfa;
+  --blue: #60a5fa;
+  --blue2: #3b82f6;
+  --green: #22c55e;
+  --cyan: #2dd4bf;
+  --sky: #38bdf8;
+  --yellow: #fbbf24;
+  --orange: #f97316;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  text-align: center;
+  padding: 48px 20px 32px;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, rgba(96,165,250,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--blue);
+  border: 1px solid rgba(96,165,250,0.4);
+  border-radius: 24px;
+  padding: 4px 14px;
+  margin-bottom: 20px;
+}
+.header h1 {
+  font-size: 3.2rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 14px;
+  line-height: 1.1;
+}
+.gradient-text {
+  background: linear-gradient(90deg, #667eea, #764ba2, #a78bfa, #60a5fa, #3b82f6, #667eea);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: flowGradient 8s linear infinite;
+}
+@keyframes flowGradient {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+.header-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-size: 15px;
+  color: #a5b4fc;
+  font-family: 'JetBrains Mono', monospace;
+}
+.header-meta span::before { content: '·'; margin-right: 8px; opacity: 0.5; }
+.header-meta span:first-child::before { display: none; }
+
+/* ── CONTAINER ── */
+.container { max-width: 900px; margin: 0 auto; padding: 0 20px 40px; }
+
+/* ── SECTION ── */
+.section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.s-domestic { border-top: 3px solid #60a5fa; }
+.s-international { border-top: 3px solid #a78bfa; }
+
+.section-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  cursor: pointer;
+  user-select: none;
+}
+.section-toggle:hover { background: rgba(255,255,255,0.02); }
+.section-header { display: flex; align-items: center; gap: 14px; }
+.section-icon { font-size: 28px; }
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.55;
+}
+.s-domestic .section-label { color: #60a5fa; }
+.s-international .section-label { color: #a78bfa; }
+.section-title { font-size: 22px; color: #fff; font-weight: 700; }
+.section-right { display: flex; align-items: center; gap: 10px; }
+.count-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 2px 9px;
+  color: var(--text-muted);
+}
+.chevron { color: var(--text-muted); font-size: 18px; transition: transform 0.25s; }
+.section.open .chevron { transform: rotate(180deg); }
+
+.section-body {
+  padding: 0 22px 24px;
+  display: none;
+}
+.section.open .section-body { display: block; }
+
+/* ── NEWS ITEM ── */
+.news-item {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  padding-left: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-left: 4px solid;
+}
+.news-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.s-domestic .news-item { border-left-color: #60a5fa; }
+.s-international .news-item { border-left-color: #a78bfa; }
+
+.news-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 22px;
+  margin-bottom: 8px;
+}
+.number-badge {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  color: #fbbf24;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.news-title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #fff;
+}
+.news-content {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #d4d8e8;
+  margin-top: 12px;
+}
+.news-content ul {
+  margin-top: 8px;
+  padding-left: 18px;
+}
+.news-content ul li {
+  margin-bottom: 4px;
+}
+.keywords {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+.keyword-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: rgba(96,165,250,0.1);
+  border: 1px solid rgba(96,165,250,0.3);
+  border-radius: 4px;
+  padding: 2px 8px;
+  color: #60a5fa;
+}
+.s-international .keyword-tag {
+  background: rgba(167,139,250,0.1);
+  border: 1px solid rgba(167,139,250,0.3);
+  color: #a78bfa;
+}
+
+/* ── STATS FOOTER ── */
+.stats-footer { padding: 0 20px 60px; max-width: 900px; margin: 0 auto; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 14px 18px;
+  text-align: center;
+}
+.stat-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 42px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+}
+.footer-credit {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  opacity: 0.6;
+  padding-top: 8px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 680px) {
+  body            { font-size: 14px; }
+  .header         { padding: 32px 16px 22px; }
+  .header h1      { font-size: 2rem; }
+  .header-meta    { font-size: 12px; gap: 14px; }
+  .header-badge   { font-size: 9px; letter-spacing: 1px; }
+  .container      { padding: 16px 12px 20px; }
+  .stats-footer   { padding: 0 12px 40px; }
+  .stats-grid     { gap: 10px; }
+  .stat-card      { padding: 20px 10px 16px; border-radius: 10px; }
+  .stat-number    { font-size: 36px; }
+  .stat-label     { font-size: 12px; }
+  .section        { margin-bottom: 14px; border-radius: 10px; }
+  .section-body   { padding: 0 14px 20px; }
+  .section-toggle { padding: 14px 16px; }
+  .section-icon   { font-size: 22px; }
+  .section-title  { font-size: 18px; }
+  .section-label  { font-size: 10px; }
+  .news-item      { padding-left: 12px; margin-bottom: 28px; padding-bottom: 22px; }
+  .news-header    { gap: 8px; margin-top: 20px; }
+  .news-title     { font-size: 15px; }
+  .number-badge   { font-size: 11px; padding: 2px 7px; }
+  .news-content   { font-size: 13px; }
+  .keywords       { flex-wrap: wrap; gap: 6px; }
+  .keyword-tag    { font-size: 10px; }
+}
+@media (max-width: 420px) {
+  .stats-grid  { grid-template-columns: repeat(2, 1fr); }
+  .stat-number { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-badge">LIVE · TECH NEWS DAILY</div>
+  <h1><span class="gradient-text">科技新闻日报</span></h1>
+  <div class="header-meta">
+    <span>2026.03.31</span>
+    <span>每日精选</span>
+    <span>v1.0</span>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- ══════════════════════════════════════
+     🇨🇳 国内新闻（默认展开）
+════════════════════════════════════════ -->
+<div class="section s-domestic open" id="sec-domestic">
+  <div class="section-toggle" onclick="toggleSection('sec-domestic')">
+    <div class="section-header">
+      <span class="section-icon">🇨🇳</span>
+      <div>
+        <div class="section-label">DOMESTIC</div>
+        <div class="section-title">国内新闻</div>
+      </div>
+    </div>
+    <div class="section-right">
+      <span class="count-pill">10篇</span>
+      <span class="chevron">▾</span>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <!-- 1. 千问引证 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">01</div>
+        <div class="news-title">千问上线「引证」功能</div>
+      </div>
+      <div class="news-content">
+        千问推出新功能「引证」——让AI对自己的回答进行二次核查。<br>
+        当用户询问新闻时事、政策动态等需要外部信源的问题时，回答末尾会出现"引证"按钮。点击后，系统进入核查模式：<br>
+        <ul>
+          <li>有可靠信源的内容 → 绿色高亮</li>
+          <li>来源模糊、未被证实 → 红色标记</li>
+        </ul>
+        这是主流AI应用中首个内置的事实复核机制。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">千问</span>
+        <span class="keyword-tag">引证功能</span>
+        <span class="keyword-tag">事实核查</span>
+      </div>
+    </div>
+
+    <!-- 2. 夏中谱 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">02</div>
+        <div class="news-title">夏中谱加盟无界动力</div>
+      </div>
+      <div class="news-content">
+        无界动力迎来重量级人物——夏中谱出任联合创始人兼联席CTO。<br>
+        履历包括：<br>
+        <ul>
+          <li>中科院自动化研究所博士</li>
+          <li>理想汽车智驾端到端技术负责人（国内首个量产落地）</li>
+          <li>百度Apollo预测模块框架搭建者</li>
+        </ul>
+        他将负责具身智能多模态大模型的研发。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">无界动力</span>
+        <span class="keyword-tag">夏中谱</span>
+        <span class="keyword-tag">具身智能</span>
+      </div>
+    </div>
+
+    <!-- 3. 钉钉CLI -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">03</div>
+        <div class="news-title">钉钉CLI开源</div>
+      </div>
+      <div class="news-content">
+        钉钉CLI项目3月27日上架Github，Apache-2.0协议。<br>
+        首批开放10项核心能力：AI表格、日历、日志、待办、机器人、通讯录、DING消息、考勤、开放平台文档、工作台。<br>
+        原生支持Claude Code、Cursor、Qoder。这是国内首个面向AI Agent开源全产品能力的国民级应用，开发者无需了解API细节，一行指令就能调用。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">钉钉</span>
+        <span class="keyword-tag">CLI开源</span>
+        <span class="keyword-tag">AI Agent</span>
+      </div>
+    </div>
+
+    <!-- 4. UU远程 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">04</div>
+        <div class="news-title">网易UU远程启动"赏金猎人计划"</div>
+      </div>
+      <div class="news-content">
+        网易UU远程推出"赏金猎人计划"——单项最高悬赏10万元征集安全漏洞。<br>
+        过去一年，UU远程把4K超清、游戏定制按键等付费功能全部免费开放，走免费无广告路线。这次主动邀请技术专家和白帽极客来挖漏洞，强调安全是远程工具的生命线。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">网易UU远程</span>
+        <span class="keyword-tag">赏金猎人</span>
+        <span class="keyword-tag">安全漏洞</span>
+      </div>
+    </div>
+
+    <!-- 5. 荣耀YOYO -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">05</div>
+        <div class="news-title">荣耀YOYO与中国移动灵犀智能体合作</div>
+      </div>
+      <div class="news-content">
+        荣耀YOYO与中国移动灵犀智能体达成合作。<br>
+        用户可在荣耀YOYO中找到灵犀智能体，一句话完成复杂查询。比如查热门赛事，系统会整合赛程时间、参赛球队、实时新闻、回看预约等信息，一张卡片呈现完整服务链路。<br>
+        合作后，灵犀智能体累计曝光突破6000万次。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">荣耀YOYO</span>
+        <span class="keyword-tag">中国移动灵犀</span>
+        <span class="keyword-tag">智能体合作</span>
+      </div>
+    </div>
+
+    <!-- 6. 广汽电驱 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">06</div>
+        <div class="news-title">广汽非晶合金电驱效率达99%</div>
+      </div>
+      <div class="news-content">
+        广汽夸克电驱2.0电机效率达99%，全球最高。<br>
+        核心是非晶合金材料，此前只用在军工、百万级豪车上。广汽把它下放到15万级别的埃安N60车型：<br>
+        <ul>
+          <li>电机效率99%</li>
+          <li>整车CLTC效率93%</li>
+          <li>续航提升30~50km</li>
+          <li>获得ASIL D功能安全最高认证</li>
+        </ul>
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">广汽</span>
+        <span class="keyword-tag">非晶合金电驱</span>
+        <span class="keyword-tag">埃安N60</span>
+      </div>
+    </div>
+
+    <!-- 7. 理想OTA -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">07</div>
+        <div class="news-title">理想汽车OTA8.4推送</div>
+      </div>
+      <div class="news-content">
+        理想汽车推送OTA8.4版本，重点升级辅助驾驶和智能座舱。<br>
+        亮点是理想AI眼镜Livis的联动体验。新增主驾耳机功能——眼镜连接中控屏后可选"全部音源"或"仅驾驶音源"。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">理想汽车</span>
+        <span class="keyword-tag">OTA8.4</span>
+        <span class="keyword-tag">AI眼镜Livis</span>
+      </div>
+    </div>
+
+    <!-- 8. 智元港中大 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">08</div>
+        <div class="news-title">智元与香港中文大学战略合作</div>
+      </div>
+      <div class="news-content">
+        智元机器人与香港中文大学共建具身智能产学研联合平台。<br>
+        合作内容包括前沿研究+工程实践结合、加速具身智能落地、常态化人才联合培养。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">智元</span>
+        <span class="keyword-tag">香港中文大学</span>
+        <span class="keyword-tag">具身智能</span>
+      </div>
+    </div>
+
+    <!-- 9. 腾讯WorkBuddy -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">09</div>
+        <div class="news-title">腾讯WorkBuddy小程序上线</div>
+      </div>
+      <div class="news-content">
+        腾讯桌面智能体WorkBuddy上线微信小程序。<br>
+        支持云上运行和电脑本地两种模式，功能包括语音识别发送指令、发送文件和图片、直接下载生成的产物。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">腾讯</span>
+        <span class="keyword-tag">WorkBuddy</span>
+        <span class="keyword-tag">桌面智能体</span>
+      </div>
+    </div>
+
+    <!-- 10. 优必选 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">10</div>
+        <div class="news-title">优必选2025年报：人形机器人收入暴涨</div>
+      </div>
+      <div class="news-content">
+        优必选公布2025年财报：<br>
+        <ul>
+          <li>收入20.01亿元（同比+53.3%）</li>
+          <li>亏损7.9亿元（上年11.6亿元）</li>
+        </ul>
+        人形机器人板块：<br>
+        <ul>
+          <li>收入8.2亿元（同比+2203.7%）</li>
+          <li>销量1079台（同比+35866.7%）</li>
+        </ul>
+        全尺寸具身智能人形机器人已成公司第一大收入来源。研发投入超5亿，占营收25.6%。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">优必选</span>
+        <span class="keyword-tag">人形机器人</span>
+        <span class="keyword-tag">2025年报</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     🌍 国际新闻
+════════════════════════════════════════ -->
+<div class="section s-international" id="sec-international">
+  <div class="section-toggle" onclick="toggleSection('sec-international')">
+    <div class="section-header">
+      <span class="section-icon">🌍</span>
+      <div>
+        <div class="section-label">INTERNATIONAL</div>
+        <div class="section-title">国际新闻</div>
+      </div>
+    </div>
+    <div class="section-right">
+      <span class="count-pill">2篇</span>
+      <span class="chevron">▾</span>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <!-- 1. 渤健收购 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">01</div>
+        <div class="news-title">渤健56亿美元收购Apellis</div>
+      </div>
+      <div class="news-content">
+        渤健（Biogen）以56亿美元收购Apellis Pharmaceuticals，扩大在免疫学和罕见病领域的治疗能力。<br>
+        交易完成后获得两款已获批药物：Syfovre（治疗致失明免疫系统疾病）、Empaveli（治疗血液疾病和罕见肾病）。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">渤健</span>
+        <span class="keyword-tag">Apellis</span>
+        <span class="keyword-tag">56亿美元</span>
+      </div>
+    </div>
+
+    <!-- 2. 味好美联合利华 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">02</div>
+        <div class="news-title">味好美与联合利华食品业务合并</div>
+      </div>
+      <div class="news-content">
+        味好美（McCormick）与联合利华食品业务合并。<br>
+        交易估值：联合利华食品业务448亿美元，味好美企业价值210亿美元。预计2027年完成，合并后联合利华及其股东持有65%股权。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">味好美</span>
+        <span class="keyword-tag">联合利华</span>
+        <span class="keyword-tag">食品业务合并</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- ══════════════════════════════════════
+     底部统计卡片
+════════════════════════════════════════ -->
+<div class="stats-footer">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number">12</div>
+      <div class="stat-label">精选篇数</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">10</div>
+      <div class="stat-label">国内新闻</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">2</div>
+      <div class="stat-label">国际新闻</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">30+</div>
+      <div class="stat-label">关键词</div>
+    </div>
+  </div>
+  <div class="footer-credit">Generated by OPC · 科技新闻日报 · v1.0</div>
+</div>
+
+<script>
+function toggleSection(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+</script>
+</body>
+</html>
