@@ -94,38 +94,6 @@ body {
 .header-meta span::before { content: '·'; margin-right: 8px; opacity: 0.5; }
 .header-meta span:first-child::before { display: none; }
 
-/* ── DATE NAVIGATION ── */
-.date-nav {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 24px;
-  flex-wrap: wrap;
-}
-.date-nav a {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  color: var(--blue);
-  text-decoration: none;
-  background: rgba(96,165,250,0.08);
-  border: 1px solid rgba(96,165,250,0.25);
-  border-radius: 20px;
-  padding: 6px 14px;
-  transition: all 0.2s ease;
-}
-.date-nav a:hover {
-  background: rgba(96,165,250,0.15);
-  border-color: rgba(96,165,250,0.5);
-}
-.date-nav a.current {
-  background: rgba(96,165,250,0.25);
-  border-color: rgba(96,165,250,0.6);
-  color: #fff;
-}
-
 /* ── CONTAINER ── */
 .container { max-width: 900px; margin: 0 auto; padding: 0 20px 40px; }
 
@@ -334,12 +302,6 @@ body {
     <span>2026.03.31</span>
     <span>每日精选</span>
     <span>v1.0</span>
-  </div>
-  <div class="date-nav">
-    <a href="daily_news_2026-04-03.html">📅 04.03</a>
-    <a href="daily_news_2026-04-02.html">📅 04.02</a>
-    <a href="daily_news_2026-04-01.html">📅 04.01</a>
-    <a href="daily_news_2026-03-31.html" class="current">📅 03.31</a>
   </div>
 </header>
 
