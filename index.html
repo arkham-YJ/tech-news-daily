@@ -94,6 +94,39 @@ body {
 .header-meta span::before { content: '·'; margin-right: 8px; opacity: 0.5; }
 .header-meta span:first-child::before { display: none; }
 
+/* ── DATE NAVIGATION ── */
+.date-nav {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+.date-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--blue);
+  text-decoration: none;
+  background: rgba(96,165,250,0.08);
+  border: 1px solid rgba(96,165,250,0.25);
+  border-radius: 24px;
+  padding: 8px 16px;
+  transition: all 0.2s ease;
+}
+.date-nav a:hover {
+  background: rgba(96,165,250,0.15);
+  border-color: rgba(96,165,250,0.5);
+  transform: translateY(-1px);
+}
+.date-nav a.current {
+  background: rgba(96,165,250,0.25);
+  border-color: rgba(96,165,250,0.6);
+  color: #fff;
+}
+
 /* ── CONTAINER ── */
 .container { max-width: 900px; margin: 0 auto; padding: 0 20px 40px; }
 
@@ -303,10 +336,10 @@ body {
     <span>每日精选</span>
     <span>v1.0</span>
   </div>
-  <div class="date-nav" style="margin-top: 20px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-    <a href="daily_news_2026-04-01.html" style="color: #60a5fa; text-decoration: none; font-size: 13px; padding: 6px 14px; border: 1px solid rgba(96,165,250,0.4); border-radius: 20px; transition: all 0.2s;">📅 04.01</a>
-    <a href="daily_news_2026-04-02.html" style="color: #60a5fa; text-decoration: none; font-size: 13px; padding: 6px 14px; border: 1px solid rgba(96,165,250,0.4); border-radius: 20px; transition: all 0.2s;">📅 04.02</a>
-    <a href="daily_news_2026-04-03.html" style="color: #60a5fa; text-decoration: none; font-size: 13px; padding: 6px 14px; border: 1px solid rgba(96,165,250,0.4); border-radius: 20px; transition: all 0.2s;">📅 04.03</a>
+  <div class="date-nav">
+    <a href="daily_news_2026-04-01.html">📅 04.01</a>
+    <a href="daily_news_2026-04-02.html">📅 04.02</a>
+    <a href="daily_news_2026-04-03.html">📅 04.03</a>
   </div>
 </header>
 
