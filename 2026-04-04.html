@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<title>科技新闻日报 · 2026.04.04</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0d16;
+  --surface: #0f1220;
+  --surface2: #131828;
+  --border: rgba(255,255,255,0.07);
+  --text: #e2e6f0;
+  --text-muted: #8892a4;
+  --purple: #a78bfa;
+  --blue: #60a5fa;
+  --blue2: #3b82f6;
+  --green: #22c55e;
+  --cyan: #2dd4bf;
+  --sky: #38bdf8;
+  --yellow: #fbbf24;
+  --orange: #f97316;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  text-align: center;
+  padding: 48px 20px 32px;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, rgba(96,165,250,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--blue);
+  border: 1px solid rgba(96,165,250,0.4);
+  border-radius: 24px;
+  padding: 4px 14px;
+  margin-bottom: 20px;
+}
+.header h1 {
+  font-size: 3.2rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 14px;
+  line-height: 1.1;
+}
+.gradient-text {
+  background: linear-gradient(90deg, #667eea, #764ba2, #a78bfa, #60a5fa, #3b82f6, #667eea);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: flowGradient 8s linear infinite;
+}
+@keyframes flowGradient {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+.header-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-size: 15px;
+  color: #a5b4fc;
+  font-family: 'JetBrains Mono', monospace;
+}
+.header-meta span::before { content: '·'; margin-right: 8px; opacity: 0.5; }
+.header-meta span:first-child::before { display: none; }
+
+/* ── CONTAINER ── */
+.container { max-width: 900px; margin: 0 auto; padding: 0 20px 40px; }
+
+/* ── SECTION ── */
+.section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.s-domestic { border-top: 3px solid #60a5fa; }
+.s-international { border-top: 3px solid #a78bfa; }
+
+.section-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  cursor: pointer;
+  user-select: none;
+}
+.section-toggle:hover { background: rgba(255,255,255,0.02); }
+.section-header { display: flex; align-items: center; gap: 14px; }
+.section-icon { font-size: 28px; }
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.55;
+}
+.s-domestic .section-label { color: #60a5fa; }
+.s-international .section-label { color: #a78bfa; }
+.section-title { font-size: 22px; color: #fff; font-weight: 700; }
+.section-right { display: flex; align-items: center; gap: 10px; }
+.count-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 2px 9px;
+  color: var(--text-muted);
+}
+.chevron { color: var(--text-muted); font-size: 18px; transition: transform 0.25s; }
+.section.open .chevron { transform: rotate(180deg); }
+
+.section-body {
+  padding: 0 22px 24px;
+  display: none;
+}
+.section.open .section-body { display: block; }
+
+/* ── NEWS ITEM ── */
+.news-item {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  padding-left: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-left: 4px solid;
+}
+.news-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.s-domestic .news-item { border-left-color: #60a5fa; }
+.s-international .news-item { border-left-color: #a78bfa; }
+
+.news-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 22px;
+  margin-bottom: 8px;
+}
+.number-badge {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  color: #fbbf24;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.news-title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #fff;
+}
+.news-content {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #d4d8e8;
+  margin-top: 12px;
+}
+.news-content ul {
+  margin-top: 8px;
+  padding-left: 18px;
+}
+.news-content ul li {
+  margin-bottom: 4px;
+}
+.keywords {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+.keyword-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: rgba(96,165,250,0.1);
+  border: 1px solid rgba(96,165,250,0.3);
+  border-radius: 4px;
+  padding: 2px 8px;
+  color: #60a5fa;
+}
+.s-international .keyword-tag {
+  background: rgba(167,139,250,0.1);
+  border: 1px solid rgba(167,139,250,0.3);
+  color: #a78bfa;
+}
+
+/* ── STATS FOOTER ── */
+.stats-footer { padding: 0 20px 60px; max-width: 900px; margin: 0 auto; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 14px 18px;
+  text-align: center;
+}
+.stat-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 42px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+}
+.footer-credit {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  opacity: 0.6;
+  padding-top: 8px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 680px) {
+  body            { font-size: 14px; }
+  .header         { padding: 32px 16px 22px; }
+  .header h1      { font-size: 2rem; }
+  .header-meta    { font-size: 12px; gap: 14px; }
+  .header-badge   { font-size: 9px; letter-spacing: 1px; }
+  .container      { padding: 16px 12px 20px; }
+  .stats-footer   { padding: 0 12px 40px; }
+  .stats-grid     { gap: 10px; }
+  .stat-card      { padding: 20px 10px 16px; border-radius: 10px; }
+  .stat-number    { font-size: 36px; }
+  .stat-label     { font-size: 12px; }
+  .section        { margin-bottom: 14px; border-radius: 10px; }
+  .section-body   { padding: 0 14px 20px; }
+  .section-toggle { padding: 14px 16px; }
+  .section-icon   { font-size: 22px; }
+  .section-title  { font-size: 18px; }
+  .section-label  { font-size: 10px; }
+  .news-item      { padding-left: 12px; margin-bottom: 28px; padding-bottom: 22px; }
+  .news-header    { gap: 8px; margin-top: 20px; }
+  .news-title     { font-size: 15px; }
+  .number-badge   { font-size: 11px; padding: 2px 7px; }
+  .news-content   { font-size: 13px; }
+  .keywords       { flex-wrap: wrap; gap: 6px; }
+  .keyword-tag    { font-size: 10px; }
+}
+@media (max-width: 420px) {
+  .stats-grid  { grid-template-columns: repeat(2, 1fr); }
+  .stat-number { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-badge">LIVE · TECH NEWS DAILY</div>
+  <h1><span class="gradient-text">科技新闻日报</span></h1>
+  <div class="header-meta">
+    <span>2026.04.04</span>
+    <span>每日精选</span>
+    <span>v1.0</span>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- ══════════════════════════════════════
+     🇨🇳 国内新闻（默认展开）
+════════════════════════════════════════ -->
+<div class="section s-domestic open" id="sec-domestic">
+  <div class="section-toggle" onclick="toggleSection('sec-domestic')">
+    <div class="section-header">
+      <span class="section-icon">🇨🇳</span>
+      <div>
+        <div class="section-label">DOMESTIC</div>
+        <div class="section-title">国内新闻</div>
+      </div>
+    </div>
+    <div class="section-right">
+      <span class="count-pill">7篇</span>
+      <span class="chevron">▾</span>
+    </div>
+  </div>
+  <div class="section-body">
+
+        <!-- 1. Anthropic计费 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">01</div>
+        <div class="news-title">Anthropic调整计费政策，第三方工具调用Claude需额外付费</div>
+      </div>
+      <div class="news-content">
+        Anthropic宣布自美国东部时间4月4日15时起，现有Claude订阅服务将不再覆盖第三方接入工具的调用额度。通过OpenClaw等代理平台调用Claude模型，必须采用独立的"按需付费"模式，承担额外成本。
+        <blockquote>包月订阅模式在设计之初并未考虑第三方工具高频、高消耗的调用场景。</blockquote>
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">Anthropic</span>
+        <span class="keyword-tag">Claude</span>
+        <span class="keyword-tag">计费调整</span>
+        <span class="keyword-tag">第三方工具</span>
+      </div>
+    </div>
+
+    <!-- 2. 字节DeerFlow -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">02</div>
+        <div class="news-title">字节超级智能体DeerFlow霸榜GitHub，获57k Star</div>
+      </div>
+      <div class="news-content">
+        字节跳动研发的超级智能体DeerFlow在GitHub上获得超过57k Star，引发全球AI圈关注。这款工具不只是一个研究工具，更像一个harness（运行时框架），能够帮助研究人员和开发者更好地进行AI相关实验和开发。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">字节跳动</span>
+        <span class="keyword-tag">DeerFlow</span>
+        <span class="keyword-tag">智能体</span>
+        <span class="keyword-tag">GitHub</span>
+      </div>
+    </div>
+
+    <!-- 3. 具身智能 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">03</div>
+        <div class="news-title">具身智能走进工厂：AI的「第一杯咖啡」</div>
+      </div>
+      <div class="news-content">
+        当大模型走出屏幕、触摸现实，具身智能的"第一杯咖啡"究竟是什么味道？让AI写一首诗很容易，但让它去车间稳稳当当地拧好一颗螺丝，至今还是个难题。文章探讨了具身智能在工厂场景的应用挑战和人机协作的边界问题。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">具身智能</span>
+        <span class="keyword-tag">工厂</span>
+        <span class="keyword-tag">人机协作</span>
+        <span class="keyword-tag">AI应用</span>
+      </div>
+    </div>
+
+    <!-- 4. 火山引擎 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">04</div>
+        <div class="news-title">火山引擎：当Token成为产业共识的好消息与坏消息</div>
+      </div>
+      <div class="news-content">
+        火山引擎相关负责人谭待表示，AI行业从一年前"跑了500米"到现在"跑了一公里"，Token正在成为产业共识。文章分析了火山引擎在AI基础设施领域的机遇与挑战。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">火山引擎</span>
+        <span class="keyword-tag">Token</span>
+        <span class="keyword-tag">AI基础设施</span>
+        <span class="keyword-tag">产业共识</span>
+      </div>
+    </div>
+
+    <!-- 5. 李飞飞 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">05</div>
+        <div class="news-title">李飞飞谈AI时代的教育变革</div>
+      </div>
+      <div class="news-content">
+        在人脑与AI共生的世界，教育将会变成怎样？李飞飞教授指出，现代教育如果还用100多年前的方法强调标准答案、知识灌输，将严重滞后于时代。她呼吁教育需要与时俱进，适应AI时代的需求。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">李飞飞</span>
+        <span class="keyword-tag">教育</span>
+        <span class="keyword-tag">AI时代</span>
+        <span class="keyword-tag">变革</span>
+      </div>
+    </div>
+
+    <!-- 6. 微医 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">06</div>
+        <div class="news-title">微医智能体为医保基金装上"数字天眼"</div>
+      </div>
+      <div class="news-content">
+        微医推出的智能体通过AI技术为医保基金装上"数字天眼"，守护百姓"救命钱、保命钱"。以AI为"盾"守护民生底线，让医保监管更精准、医疗服务更高效、群众就医更安心。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">微医</span>
+        <span class="keyword-tag">医保基金</span>
+        <span class="keyword-tag">AI监管</span>
+        <span class="keyword-tag">智能体</span>
+      </div>
+    </div>
+
+    <!-- 7. 奥特曼预言 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">07</div>
+        <div class="news-title">奥特曼预言与现实：12个顶级模型"创业"一年仅3个存活</div>
+      </div>
+      <div class="news-content">
+        AI能帮你经营一家创业公司吗？文章回顾了Sam Altman一年前的预言，对比现实中12个顶级AI模型"创业"一年的表现，发现仅有3个模型成功存活，揭示了AI创业的现实挑战。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">Sam Altman</span>
+        <span class="keyword-tag">AI创业</span>
+        <span class="keyword-tag">模型测试</span>
+        <span class="keyword-tag">存活率</span>
+      </div>
+    </div>
+
+
+
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">01</div>
+        <div class="news-title">渤健56亿美元收购Apellis</div>
+      </div>
+      <div class="news-content">
+        渤健（Biogen）以56亿美元收购Apellis Pharmaceuticals，扩大在免疫学和罕见病领域的治疗能力。<br>
+        交易完成后获得两款已获批药物：Syfovre（治疗致失明免疫系统疾病）、Empaveli（治疗血液疾病和罕见肾病）。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">渤健</span>
+        <span class="keyword-tag">Apellis</span>
+        <span class="keyword-tag">56亿美元</span>
+      </div>
+    </div>
+
+    <!-- 2. 味好美联合利华 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">02</div>
+        <div class="news-title">味好美与联合利华食品业务合并</div>
+      </div>
+      <div class="news-content">
+        味好美（McCormick）与联合利华食品业务合并。<br>
+        交易估值：联合利华食品业务448亿美元，味好美企业价值210亿美元。预计2027年完成，合并后联合利华及其股东持有65%股权。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">味好美</span>
+        <span class="keyword-tag">联合利华</span>
+        <span class="keyword-tag">食品业务合并</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- ══════════════════════════════════════
+     底部统计卡片
+════════════════════════════════════════ -->
+<div class="stats-footer">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number">15</div>
+      <div class="stat-label">精选篇数</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">7</div>
+      <div class="stat-label">国内新闻</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">8</div>
+      <div class="stat-label">国际新闻</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">30+</div>
+      <div class="stat-label">关键词</div>
+    </div>
+  </div>
+  <div class="footer-credit">Generated by OPC · 科技新闻日报 · v1.0</div>
+</div>
+
+<script>
+function toggleSection(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+</script>
+</body>
+</html>
