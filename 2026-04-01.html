@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<title>科技新闻日报 · 2026.04.01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0d16;
+  --surface: #0f1220;
+  --surface2: #131828;
+  --border: rgba(255,255,255,0.07);
+  --text: #e2e6f0;
+  --text-muted: #8892a4;
+  --purple: #a78bfa;
+  --blue: #60a5fa;
+  --blue2: #3b82f6;
+  --green: #22c55e;
+  --cyan: #2dd4bf;
+  --sky: #38bdf8;
+  --yellow: #fbbf24;
+  --orange: #f97316;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  text-align: center;
+  padding: 48px 20px 32px;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, rgba(96,165,250,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--blue);
+  border: 1px solid rgba(96,165,250,0.4);
+  border-radius: 24px;
+  padding: 4px 14px;
+  margin-bottom: 20px;
+}
+.header h1 {
+  font-size: 3.2rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 14px;
+  line-height: 1.1;
+}
+.gradient-text {
+  background: linear-gradient(90deg, #667eea, #764ba2, #a78bfa, #60a5fa, #3b82f6, #667eea);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: flowGradient 8s linear infinite;
+}
+@keyframes flowGradient {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+.header-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-size: 15px;
+  color: #a5b4fc;
+  font-family: 'JetBrains Mono', monospace;
+}
+.header-meta span::before { content: '·'; margin-right: 8px; opacity: 0.5; }
+.header-meta span:first-child::before { display: none; }
+
+/* ── CONTAINER ── */
+.container { max-width: 900px; margin: 0 auto; padding: 0 20px 40px; }
+
+/* ── SECTION ── */
+.section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.s-domestic { border-top: 3px solid #60a5fa; }
+.s-international { border-top: 3px solid #a78bfa; }
+
+.section-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  cursor: pointer;
+  user-select: none;
+}
+.section-toggle:hover { background: rgba(255,255,255,0.02); }
+.section-header { display: flex; align-items: center; gap: 14px; }
+.section-icon { font-size: 28px; }
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.55;
+}
+.s-domestic .section-label { color: #60a5fa; }
+.s-international .section-label { color: #a78bfa; }
+.section-title { font-size: 22px; color: #fff; font-weight: 700; }
+.section-right { display: flex; align-items: center; gap: 10px; }
+.count-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 2px 9px;
+  color: var(--text-muted);
+}
+.chevron { color: var(--text-muted); font-size: 18px; transition: transform 0.25s; }
+.section.open .chevron { transform: rotate(180deg); }
+
+.section-body {
+  padding: 0 22px 24px;
+  display: none;
+}
+.section.open .section-body { display: block; }
+
+/* ── NEWS ITEM ── */
+.news-item {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  padding-left: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-left: 4px solid;
+}
+.news-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.s-domestic .news-item { border-left-color: #60a5fa; }
+.s-international .news-item { border-left-color: #a78bfa; }
+
+.news-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 22px;
+  margin-bottom: 8px;
+}
+.number-badge {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  color: #fbbf24;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.news-title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #fff;
+}
+.news-content {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #d4d8e8;
+  margin-top: 12px;
+}
+.news-content ul {
+  margin-top: 8px;
+  padding-left: 18px;
+}
+.news-content ul li {
+  margin-bottom: 4px;
+}
+.keywords {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+.keyword-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: rgba(96,165,250,0.1);
+  border: 1px solid rgba(96,165,250,0.3);
+  border-radius: 4px;
+  padding: 2px 8px;
+  color: #60a5fa;
+}
+.s-international .keyword-tag {
+  background: rgba(167,139,250,0.1);
+  border: 1px solid rgba(167,139,250,0.3);
+  color: #a78bfa;
+}
+.source {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+.source a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+.source a:hover {
+  text-decoration: underline;
+}
+
+/* ── STATS FOOTER ── */
+.stats-footer { padding: 0 20px 60px; max-width: 900px; margin: 0 auto; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 14px 18px;
+  text-align: center;
+}
+.stat-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 42px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+}
+.footer-credit {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  opacity: 0.6;
+  padding-top: 8px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 680px) {
+  body            { font-size: 14px; }
+  .header         { padding: 32px 16px 22px; }
+  .header h1      { font-size: 2rem; }
+  .header-meta    { font-size: 12px; gap: 14px; }
+  .header-badge   { font-size: 9px; letter-spacing: 1px; }
+  .container      { padding: 16px 12px 20px; }
+  .stats-footer   { padding: 0 12px 40px; }
+  .stats-grid     { gap: 10px; }
+  .stat-card      { padding: 20px 10px 16px; border-radius: 10px; }
+  .stat-number    { font-size: 36px; }
+  .stat-label     { font-size: 12px; }
+  .section        { margin-bottom: 14px; border-radius: 10px; }
+  .section-body   { padding: 0 14px 20px; }
+  .section-toggle { padding: 14px 16px; }
+  .section-icon   { font-size: 22px; }
+  .section-title  { font-size: 18px; }
+  .section-label  { font-size: 10px; }
+  .news-item      { padding-left: 12px; margin-bottom: 28px; padding-bottom: 22px; }
+  .news-header    { gap: 8px; margin-top: 20px; }
+  .news-title     { font-size: 15px; }
+  .number-badge   { font-size: 11px; padding: 2px 7px; }
+  .news-content   { font-size: 13px; }
+  .keywords       { flex-wrap: wrap; gap: 6px; }
+  .keyword-tag    { font-size: 10px; }
+}
+@media (max-width: 420px) {
+  .stats-grid  { grid-template-columns: repeat(2, 1fr); }
+  .stat-number { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-badge">LIVE · TECH NEWS DAILY</div>
+  <h1><span class="gradient-text">科技新闻日报</span></h1>
+  <div class="header-meta">
+    <span>2026.04.01</span>
+    <span>每日精选</span>
+    <span>v1.0</span>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- ══════════════════════════════════════
+     🇨🇳 国内新闻（默认展开）
+════════════════════════════════════════ -->
+<div class="section s-domestic open" id="sec-domestic">
+  <div class="section-toggle" onclick="toggleSection('sec-domestic')">
+    <div class="section-header">
+      <span class="section-icon">🇨🇳</span>
+      <div>
+        <div class="section-label">DOMESTIC</div>
+        <div class="section-title">国内新闻</div>
+      </div>
+    </div>
+    <div class="section-right">
+      <span class="count-pill">7篇</span>
+      <span class="chevron">▾</span>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <!-- 1. OpenAI融资 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">01</div>
+        <div class="news-title">OpenAI完成创纪录1220亿美元融资</div>
+      </div>
+      <div class="news-content">
+        OpenAI这轮融资数字刷新纪录——1220亿美元，投后估值8520亿。比之前公布的1100亿又多了。融资来自多家机构和战略投资人。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">OpenAI</span>
+        <span class="keyword-tag">融资</span>
+        <span class="keyword-tag">AI独角兽</span>
+      </div>
+      <div class="source">信息源：<a href="https://www.oschina.net/news" target="_blank">开源中国</a></div>
+    </div>
+
+    <!-- 2. 阿里Wan2.7-Image -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">02</div>
+        <div class="news-title">阿里发布图像生成与编辑统一模型Wan2.7-Image</div>
+      </div>
+      <div class="news-content">
+        阿里出了个新模型Wan2.7-Image。功能覆盖文生图、图生图、改图、调色——一条龙。重点是"调色盘"功能，能精准控制颜色，不像以前那样随机生成。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">阿里</span>
+        <span class="keyword-tag">图像生成</span>
+        <span class="keyword-tag">AI模型</span>
+      </div>
+      <div class="source">信息源：<a href="https://36kr.com/newsflashes/3748005350769412" target="_blank">36氪</a></div>
+    </div>
+
+    <!-- 3. Anthropic泄露 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">03</div>
+        <div class="news-title">Anthropic确认Claude Code源代码泄露</div>
+      </div>
+      <div class="news-content">
+        Anthropic又出事了。Claude Code发布时把50万行内部代码打包进了npm公开发布。公司说没泄露客户数据，纯属人为失误。一周内两次泄露，操作确实有问题。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">Anthropic</span>
+        <span class="keyword-tag">Claude</span>
+        <span class="keyword-tag">源代码泄露</span>
+      </div>
+      <div class="source">信息源：<a href="https://www.oschina.net/news" target="_blank">开源中国</a></div>
+    </div>
+
+    <!-- 4. 宁德时代机器人 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">04</div>
+        <div class="news-title">宁德时代人形机器人关节专利获授权</div>
+      </div>
+      <div class="news-content">
+        宁德时代拿了个人形机器人关节专利。亮点在哪？把关节做薄了。现有人形机器人脖子太粗，这个设计能让它更紧凑。宁德时代做电池的，也开始布局机器人了。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">宁德时代</span>
+        <span class="keyword-tag">人形机器人</span>
+        <span class="keyword-tag">专利</span>
+      </div>
+      <div class="source">信息源：<a href="https://36kr.com/newsflashes/3748030107419137" target="_blank">36氪</a></div>
+    </div>
+
+    <!-- 5. OpenClaw安全提示 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">05</div>
+        <div class="news-title">国家知识产权局发布OpenClaw安全风险提示</div>
+      </div>
+      <div class="news-content">
+        国家知识产权局点名OpenClaw。提示这类智能体工具默认配置不安全，容易出事。还提醒别用AI写专利申请文件。安全问题开始被官方重视。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">OpenClaw</span>
+        <span class="keyword-tag">安全风险</span>
+        <span class="keyword-tag">智能体</span>
+      </div>
+      <div class="source">信息源：<a href="https://www.oschina.net/news" target="_blank">开源中国</a></div>
+    </div>
+
+    <!-- 6. 1688驰名商标 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">06</div>
+        <div class="news-title">1688获"驰名商标"司法认定</div>
+      </div>
+      <div class="news-content">
+        1688成了驰名商标。别人想蹭这个名字，门槛高了不少。1688还搞了个法律服务中心，专门帮商家处理法律问题。阿里对知识产权越来越上心。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">1688</span>
+        <span class="keyword-tag">驰名商标</span>
+        <span class="keyword-tag">阿里巴巴</span>
+      </div>
+      <div class="source">信息源：<a href="https://36kr.com/newsflashes/3748011675419141" target="_blank">36氪</a></div>
+    </div>
+
+    <!-- 7. QQ接入OpenClaw -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">07</div>
+        <div class="news-title">QQ成为国内首个被OpenClaw官方原生接入的社交平台</div>
+      </div>
+      <div class="news-content">
+        OpenClaw新版本把QQ接进去了。QQ成了国内第一个被官方原生接入的社交平台。代码是腾讯轻量云和QQ团队一起贡献的，合进了主仓库。创始人Peter公开点赞。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">QQ</span>
+        <span class="keyword-tag">OpenClaw</span>
+        <span class="keyword-tag">社交平台</span>
+      </div>
+      <div class="source">信息源：<a href="https://36kr.com/newsflashes/3748028686402304" target="_blank">36氪</a></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     🌍 国际新闻
+════════════════════════════════════════ -->
+<div class="section s-international" id="sec-international">
+  <div class="section-toggle" onclick="toggleSection('sec-international')">
+    <div class="section-header">
+      <span class="section-icon">🌍</span>
+      <div>
+        <div class="section-label">INTERNATIONAL</div>
+        <div class="section-title">国际新闻</div>
+      </div>
+    </div>
+    <div class="section-right">
+      <span class="count-pill">7篇</span>
+      <span class="chevron">▾</span>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <!-- 1. NASA绕月 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">01</div>
+        <div class="news-title">美国载人绕月飞行任务进入最后准备阶段</div>
+      </div>
+      <div class="news-content">
+        NASA的载人绕月任务要来了。阿耳忒弥斯2号计划4月发射，目前在做最后准备。天气预报显示适合发射概率较高。这次不登月，只是绕一圈再回来。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">NASA</span>
+        <span class="keyword-tag">载人绕月</span>
+        <span class="keyword-tag">阿耳忒弥斯</span>
+      </div>
+      <div class="source">信息源：<a href="https://ysxw.cctv.cn/article.html?toc_style_id=feeds_default&item_id=3329206474977150748&channelId=1119" target="_blank">央视新闻</a></div>
+    </div>
+
+    <!-- 2. 韩国半导体 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">02</div>
+        <div class="news-title">韩国3月半导体出口额首次突破300亿美元</div>
+      </div>
+      <div class="news-content">
+        韩国3月出口数据炸了。单月861.3亿美元，历史最高。半导体出口涨了151%，第一次冲过300亿美元。全球芯片需求真的回来了。汽车出口也涨了一点，63.7亿。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">韩国</span>
+        <span class="keyword-tag">半导体</span>
+        <span class="keyword-tag">出口</span>
+      </div>
+      <div class="source">信息源：<a href="https://www.jiemian.com/article/14196499.html" target="_blank">界面新闻</a></div>
+    </div>
+
+    <!-- 3. 德国经济 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">03</div>
+        <div class="news-title">德国大幅下调2026年经济增长预期</div>
+      </div>
+      <div class="news-content">
+        德国五大智库联合出报告，把经济预期往下调了。2026年只指望增长0.6%，比秋天预测砍了一半。中东局势影响能源价格，复苏被拖慢。欧洲经济这几年确实不太行。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">德国</span>
+        <span class="keyword-tag">经济预测</span>
+        <span class="keyword-tag">能源价格</span>
+      </div>
+      <div class="source">信息源：<a href="https://36kr.com" target="_blank">36氪（援引央视新闻）</a></div>
+    </div>
+
+    <!-- 4. FFmpeg愚人节 -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">04</div>
+        <div class="news-title">FFmpeg愚人节玩笑引发热议</div>
+      </div>
+      <div class="news-content">
+        FFmpeg愚人节搞了个大新闻，说要迁移到Rust。理由写得很正经——"C语言和汇编对安全性不可接受"。开发者社区炸了，有人信了，有人笑了。经典的愚人节玩笑。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">FFmpeg</span>
+        <span class="keyword-tag">Rust</span>
+        <span class="keyword-tag">愚人节</span>
+      </div>
+      <div class="source">信息源：<a href="https://www.oschina.net/news/416384" target="_blank">开源中国</a></div>
+    </div>
+
+    <!-- 5. Lodash -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">05</div>
+        <div class="news-title">Lodash 4.18.0发布并过渡至功能完成阶段</div>
+      </div>
+      <div class="news-content">
+        Lodash出4.18.0了。这个库有点特殊——主权技术机构给它砸钱，让它进入"功能完成"阶段。意思就是以后不改了，只维护。对开发者来说是好消息，一个稳定的工具库终于能放心用了。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">Lodash</span>
+        <span class="keyword-tag">JavaScript</span>
+        <span class="keyword-tag">开源</span>
+      </div>
+      <div class="source">信息源：<a href="https://www.oschina.net/news/416533/lodash-4-18-0-released" target="_blank">开源中国</a></div>
+    </div>
+
+    <!-- 6. Krita -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">06</div>
+        <div class="news-title">Krita 5.3.0和6.0.0正式推出</div>
+      </div>
+      <div class="news-content">
+        Krita同时出了5.3.0和6.0.0。代码一样，区别在哪？5.3用Qt5，6.0用Qt6。选哪个？看你的系统。6.0的Wayland支持更完善，Linux用户可能更香。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">Krita</span>
+        <span class="keyword-tag">开源</span>
+        <span class="keyword-tag">图像编辑</span>
+      </div>
+      <div class="source">信息源：<a href="https://www.oschina.net/news" target="_blank">开源中国</a></div>
+    </div>
+
+    <!-- 7. Kubescape -->
+    <div class="news-item">
+      <div class="news-header">
+        <div class="number-badge">07</div>
+        <div class="news-title">Kubescape 4.0发布</div>
+      </div>
+      <div class="news-content">
+        Kubescape 4.0来了。Kubernetes安全工具，这次主打企业级稳定性和高级威胁检测。核心变化？安全更主动，扩展更方便。搞K8s安全的可以看看了。
+      </div>
+      <div class="keywords">
+        <span class="keyword-tag">Kubernetes</span>
+        <span class="keyword-tag">安全</span>
+        <span class="keyword-tag">开源</span>
+      </div>
+      <div class="source">信息源：<a href="https://www.oschina.net/news/416399" target="_blank">开源中国</a></div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- ══════════════════════════════════════
+     底部统计卡片
+════════════════════════════════════════ -->
+<div class="stats-footer">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number">14</div>
+      <div class="stat-label">精选篇数</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">7</div>
+      <div class="stat-label">国内新闻</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">7</div>
+      <div class="stat-label">国际新闻</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">30+</div>
+      <div class="stat-label">关键词</div>
+    </div>
+  </div>
+  <div class="footer-credit">Generated by OPC · 科技新闻日报 · v1.0</div>
+</div>
+
+<script>
+function toggleSection(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+</script>
+</body>
+</html>
